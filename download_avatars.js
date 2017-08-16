@@ -18,14 +18,28 @@ function getRepoContributors(repoOwner, repoName, cb){
 
   request.get(options, function(err, response, body){
     if (err) throw err;
-    console.log(JSON.parse(body));
+    let data = JSON.parse(body);
+    cb(err, data);
   });
 
 }
 
-function cb(err, result){
-  console.log("Errors: ", err);
-  console.log("Result: ", result);
+function downloadImageByURL(url, filePath){
+  request.get(url)
+    .on('error', function(err){
+      throw err;
+    })
+    .on('response', function(response){
+      console.log(response.statusCode);
+    })
+    .pipe(fs.createWriteStream(filePath));
 }
-getRepoContributors('nodejs', "node", cb);
+
+function cb(err, result){
+  result.forEach(function(r){
+    console.log(r.avatar_url);
+  })
+}
+//getRepoContributors('nodejs', "node", cb);
+downloadImageByURL('https://avatars1.githubusercontent.com/u/10393198?v=4', 'avatars/test123.jpg');
 
