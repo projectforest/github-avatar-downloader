@@ -1,8 +1,10 @@
+require('dotenv').config();
 var request = require('request');
-var github_user = 'projectforest';
-var github_token = '547921871e07d0dc15dcd89e4cc89c70066235c8';
+var github_user = process.env.GITHUB_USER;
+var github_token = process.env.GITHUB_TOKEN;
 var fs = require('fs');
 var user_agent = github_user;
+
 
 if (process.argv.length !== 4) {
   throw "error: repo directory and owner required";
