@@ -3,7 +3,15 @@ var github_user = 'projectforest';
 var github_token = '547921871e07d0dc15dcd89e4cc89c70066235c8';
 var fs = require('fs');
 var user_agent = github_user;
+//var args = process.argv;
 
+if (process.argv.length !== 4) {
+  throw "error: repo directory and owner required";
+}
+else {
+    var owner = process.argv[2];
+    var repo = process.argv[3];
+}
 
 console.log('Welcome to the github avatar downloader');
 
@@ -29,17 +37,20 @@ function downloadImageByURL(url, filePath){
     .on('error', function(err){
       throw err;
     })
-    .on('response', function(response){
-      console.log(response.statusCode);
-    })
+    //.on('response', function(response){
+      //console.log(response.statusCode);
+    //})
     .pipe(fs.createWriteStream(filePath));
 }
 
 function cb(err, result){
   result.forEach(function(r){
-    console.log(r.avatar_url);
+    let avatarPath = 'avatars/' + r.login + '.jpg';
+    downloadImageByURL(r.avatar_url, avatarPath);
   })
 }
-//getRepoContributors('nodejs', "node", cb);
-downloadImageByURL('https://avatars1.githubusercontent.com/u/10393198?v=4', 'avatars/test123.jpg');
+
+getRepoContributors(owner, repo, cb);
+//getRepoContributors(args[2], args[3], cb);
+
 
