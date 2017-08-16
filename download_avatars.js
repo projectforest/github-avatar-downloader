@@ -3,7 +3,6 @@ var github_user = 'projectforest';
 var github_token = '547921871e07d0dc15dcd89e4cc89c70066235c8';
 var fs = require('fs');
 var user_agent = github_user;
-//var args = process.argv;
 
 if (process.argv.length !== 4) {
   throw "error: repo directory and owner required";
@@ -17,7 +16,7 @@ console.log('Welcome to the github avatar downloader');
 
 
 function getRepoContributors(repoOwner, repoName, cb){
-  //let request_url = 'https://${github_user}:${github_token}@api.github.com/repos/${repoOwner}/${repoName}/contributors';
+
   var request_url = 'https://'+ github_user + ':' + github_token+ '@api.github.com/repos/' + repoOwner + '/' + repoName + '/contributors';
   let options = {
     url: request_url,
@@ -37,9 +36,6 @@ function downloadImageByURL(url, filePath){
     .on('error', function(err){
       throw err;
     })
-    //.on('response', function(response){
-      //console.log(response.statusCode);
-    //})
     .pipe(fs.createWriteStream(filePath));
 }
 
@@ -51,6 +47,6 @@ function cb(err, result){
 }
 
 getRepoContributors(owner, repo, cb);
-//getRepoContributors(args[2], args[3], cb);
+
 
 
