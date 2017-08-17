@@ -19,7 +19,7 @@ console.log('Welcome to the github avatar downloader');
 
 function getRepoContributors(repoOwner, repoName, cb){
 
-  var request_url = 'https://'+ github_user + ':' + github_token+ '@api.github.com/repos/' + repoOwner + '/' + repoName + '/contributors';
+  var request_url = `https://${github_user}:${github_token}@api.github.com/repos/${repoOwner}/${repoName}/contributors`;
   let options = {
     url: request_url,
     headers: { 'User-Agent': user_agent }
@@ -46,6 +46,7 @@ function cb(err, result){
     let avatarPath = 'avatars/' + r.login + '.jpg';
     downloadImageByURL(r.avatar_url, avatarPath);
   })
+  console.log("Download complete");
 }
 
 getRepoContributors(owner, repo, cb);
